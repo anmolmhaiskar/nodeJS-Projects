@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+    <body>
+        <h1>This is EJS Homepage</h1>
+
+        <% if (locals.id) { %>
+            <h3> http://localhost:8001/urls/<%= locals.id %></h3>
+        <% } %>
+
+        <h2>Generate a Shortened URL</h2>
+        <form action="/urls" method="POST">
+            Enter URL : <input type="text" name="url" placeholder="https://www.example.com">
+            <button type="submit">Generate</button>
+        </form>
+
+        <br>
+        <% if (locals.urls) { %>
+            <table cellspacing="3" cellpadding="2" border="1" align="center">
+                <thead>
+                    <th>Sr no.</th>
+                    <th>Original URL</th>
+                    <th>Short URL</th>
+                    <th>Clicks</th>
+                </thead>
+                <tbody>
+                    <% locals.urls.forEach((url, id) => { %>
+                        <tr align="center">
+                            <td> <%= id+1 %> </td>
+                            <td> <%= url.redirect_url %> </td>
+                            <td> <%= `http://localhost:8001/urls/${url.short_id}` %> </td>
+                            <td> <%= url.visit_history.length %> </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
+    </body>
+</html>
